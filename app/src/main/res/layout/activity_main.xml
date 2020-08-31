@@ -1,21 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    >
+    android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#00bfcf"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="TopBar"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#333333"
+                android:layout_above="@id/llChat"
+                />
+
+        <LinearLayout
+            android:id="@+id/llChat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_above="@+id/flPanel"
+            >
+
+            <EditText
+                android:id="@+id/etChat"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="输入框"
+                android:gravity="center"
+                />
+
+            <Button
+                android:id="@+id/btSticker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="表情"
+                />
+
+            <Button
+                android:id="@+id/btMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多"
+                />
+
+        </LinearLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/flPanel"
+            android:layout_alignParentBottom="true"
+            >
+        <com.newler.keyboarddemo.StickerPanel
+            android:id="@+id/stickerPanel"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#ED1111"
+            android:visibility="gone" />
+
+        <com.newler.keyboarddemo.MorePanel
+            android:id="@+id/morePanel"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#0072ff"
+            android:visibility="gone" />
+        </FrameLayout>
+    </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.View
  */
 interface Panel {
     fun getView(): View
-    fun getHeight(): Int
-    fun reset()
+    fun getViewHeight(): Int
+    fun hide()
+    fun show()
 }

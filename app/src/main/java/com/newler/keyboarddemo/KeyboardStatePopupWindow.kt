@@ -68,9 +68,4 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
     fun setOnKeyboardStateListener(listener: OnKeyboardStateListener?) {
         this.onKeyboardStateListener = listener
     }
-
-    interface OnKeyboardStateListener {
-        fun onOpened(keyboardHeight: Int)
-        fun onClosed()
-    }
 }

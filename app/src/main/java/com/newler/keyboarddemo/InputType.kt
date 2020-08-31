@@ -12,6 +12,6 @@ annotation class InputType {
         const val STICKER = 0
         const val NONE = 1
         const val MORE = 2
-        const val SOFT_KEYBOARD = 3
+        const val KEYBOARD = 3
     }
 }
