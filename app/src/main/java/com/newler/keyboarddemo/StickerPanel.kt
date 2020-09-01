@@ -26,7 +26,7 @@ class StickerPanel(context: Context, attr: AttributeSet):Panel, FrameLayout(cont
     }
 
     override fun getViewHeight(): Int {
-        return DensityUtil.dp2px(context, 120f)
+        return DensityUtil.dp2px(context, 200f)
     }
 
     override fun hide() {

@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
+import android.widget.TextView
 
 /**
  * @author  FreddyChen
@@ -19,7 +21,7 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
     ViewTreeObserver.OnGlobalLayoutListener {
 
     init {
-        val contentView = View(context)
+        val contentView = TextView(context)
         setContentView(contentView)
         width = 0
         height = ViewGroup.LayoutParams.MATCH_PARENT
@@ -33,7 +35,7 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
                 anchorView,
                 Gravity.NO_GRAVITY,
                 0,
-                0
+                    0
             )
         }
     }
@@ -50,6 +52,7 @@ class KeyboardStatePopupWindow(var context: Context, anchorView: View) : PopupWi
         //键盘的高度
         val keyboardHeight = maxHeight - rect.bottom
         val visible = keyboardHeight > DensityUtil.dp2px(context, 100f)
+        Log.d("KeyboardState", visible.toString())
         if (!isSoftKeyboardOpened && visible) {
             isSoftKeyboardOpened = true
             onKeyboardStateListener?.onOpened(keyboardHeight)

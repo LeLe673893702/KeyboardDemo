@@ -39,6 +39,6 @@ class MorePanel(context: Context, attr: AttributeSet): Panel, FrameLayout(contex
     }
 
     override fun getViewHeight(): Int {
-        return DensityUtil.dp2px(context, 100f)
+        return DensityUtil.dp2px(context, 180f)
     }
 }

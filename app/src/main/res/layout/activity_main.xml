@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            android:layout_above="@+id/flPanel"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
             >
 
             <EditText
@@ -63,29 +64,40 @@
                 android:text="更多"
                 />
 
+            <Button
+                android:id="@+id/btAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="增加"
+                />
+
+            <Button
+                android:id="@+id/btDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="删除"
+                />
         </LinearLayout>
-
-
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/flPanel"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/llChat"
             >
         <com.newler.keyboarddemo.StickerPanel
             android:id="@+id/stickerPanel"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="180dp"
             android:background="#ED1111"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <com.newler.keyboarddemo.MorePanel
             android:id="@+id/morePanel"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:background="#0072ff"
-            android:visibility="gone" />
+            android:visibility="visible" />
         </FrameLayout>
     </RelativeLayout>
 

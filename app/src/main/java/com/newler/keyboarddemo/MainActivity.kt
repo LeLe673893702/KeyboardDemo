@@ -3,6 +3,7 @@ package com.newler.keyboarddemo
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,33 +20,60 @@ class MainActivity : AppCompatActivity() {
     private val keyboardPanel by lazy {
         KeyboardPanel(etChat)
     }
-    private val keyboardHelper by lazy {
-        KeyboardHelper(this, layout_main, recycler_view,llChat, stickerPanel, morePanel, keyboardPanel)
-    }
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var keyboardHelper: KeyboardHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         msgList = arrayListOf()
-        for (i in 0 until 20) {
+        for (i in 0 until 2) {
             msgList.add("Msg${i + 1}")
         }
-
+        keyboardHelper = KeyboardHelper(this, layout_main, recycler_view, llChat, stickerPanel, morePanel, keyboardPanel)
         btMore.setOnClickListener {
             keyboardHelper.convertInputType(InputType.MORE)
-        }
-
-        btSticker.setOnClickListener {
-            keyboardHelper.convertInputType(InputType.STICKER)
         }
 
         recycler_view.setHasFixedSize(true)
         val adapter = MsgListAdapter(this)
         recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        val layoutManager = LinearLayoutManager(this)
+        layoutManager = LinearLayoutManager(this)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
         scrollToBottom()
+
+        btSticker.setOnClickListener {
+            keyboardHelper.convertInputType(InputType.STICKER)
+        }
+
+        btAdd.setOnClickListener {
+            msgList.add("Msg${msgList.size + 1}")
+            msgList.add("Msg${msgList.size + 1}")
+            adapter.notifyItemRangeInserted(msgList.size-2, 2)
+            recycler_view.post {
+                Log.d("MainActivity","${layoutManager.findLastVisibleItemPosition()}")
+            }
+        }
+
+        btDelete.setOnClickListener {
+            msgList.removeLast()
+            adapter.notifyItemRemoved(msgList.size)
+        }
+
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+            }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                Log.d("MainActivity", "itemCount = $itemCount posStart = $positionStart lastVisible = ${layoutManager.findLastVisibleItemPosition()}")
+                Log.d("MainActivity", layoutManager.findViewByPosition(positionStart)?.toString() ?: "哈哈")
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            }
+        })
 
         recycler_view.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
@@ -54,6 +82,8 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
+
+
 
     private fun scrollToBottom() {
         recycler_view.adapter?.itemCount?.minus(1)?.let { recycler_view.scrollToPosition(it) }
@@ -80,5 +110,10 @@ class MainActivity : AppCompatActivity() {
         private inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val msgTextView: TextView = itemView.findViewById(R.id.tv_msg)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        keyboardHelper.release()
     }
 }
